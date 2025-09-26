@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { sendShippingData } from "../../api/sendShippingData";
-import { updateShipping } from "../../store/shippingSlice";
+import { clearShipping, updateShipping } from "../../store/shippingSlice";
 import createStrapiOrder from "../../api/createStrapiOrder";
 import Stepper from "../../components/ui/Stepper";
+import { clearCart } from "../../store/productSlice";
 
 const PaymentPage = () => {
   const formData = useSelector((state) => state.shipping);
@@ -154,6 +155,8 @@ const PaymentPage = () => {
                     navigate(
                       "/cart/productdelivery/paymentinfo/paymentconfirmation"
                     );
+                    dispatch(clearCart());
+                    dispatch(clearShipping());
                   } catch (error) {
                     console.error("Payment process failed:", error);
                     alert("Payment process failed. Please try again.");
