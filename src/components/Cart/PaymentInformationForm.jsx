@@ -47,7 +47,7 @@ const PaymentInformationForm = () => {
           placeholder="Your Email"
           value={localEmail}
           onChange={handleInputChange}
-          className="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white placeholder-gray-400 focus:border-orange-500 focus:outline-none"
+          className="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white placeholder-gray-400 focus:border-green-500 focus:outline-none"
         />
         {emailError && (
           <p className="text-red-500 text-sm mt-2">{emailError}</p>

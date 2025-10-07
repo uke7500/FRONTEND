@@ -37,6 +37,9 @@ const Navbar = () => {
         <NavLink to="/contact" className={navLinkClasses}>
           Contact
         </NavLink>
+        <NavLink to="/privacy-policy" className={navLinkClasses}>
+          Privacy Policy
+        </NavLink>
 
         <NavLink
           to="/cart"

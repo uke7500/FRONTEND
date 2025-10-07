@@ -1,8 +1,7 @@
 // hooks/useProducts.js
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const STRAPI_API = import.meta.env.VITE_STRAPI_URL;
-
 
 export const useProducts = (options = {}) => {
   const [products, setProducts] = useState([]);
@@ -13,14 +12,14 @@ export const useProducts = (options = {}) => {
   const {
     page = 1,
     limit = 10,
-    category = '',
-    search = '',
+    category = "",
+    search = "",
     minPrice = 0,
     maxPrice = Infinity,
     inStock = null,
-    sortBy = 'name',
-    sortOrder = 'asc',
-    autoFetch = true
+    sortBy = "name",
+    sortOrder = "asc",
+    autoFetch = true,
   } = options;
 
   const fetchProducts = async () => {
@@ -31,23 +30,25 @@ export const useProducts = (options = {}) => {
       // Build query parameters
       const params = new URLSearchParams();
 
-      if (page) params.append('page', page);
-      if (limit) params.append('limit', limit);
-      if (category) params.append('category', category);
-      if (search) params.append('search', search);
-      if (minPrice > 0) params.append('minPrice', minPrice);
-      if (maxPrice < Infinity) params.append('maxPrice', maxPrice);
-      if (inStock !== null) params.append('inStock', inStock);
-      if (sortBy) params.append('sortBy', sortBy);
-      if (sortOrder) params.append('sortOrder', sortOrder);
+      if (page) params.append("page", page);
+      if (limit) params.append("limit", limit);
+      if (category) params.append("category", category);
+      if (search) params.append("search", search);
+      if (minPrice > 0) params.append("minPrice", minPrice);
+      if (maxPrice < Infinity) params.append("maxPrice", maxPrice);
+      if (inStock !== null) params.append("inStock", inStock);
+      if (sortBy) params.append("sortBy", sortBy);
+      if (sortOrder) params.append("sortOrder", sortOrder);
 
       // const queryString = params.toString();
-      const url = STRAPI_API + `/api/products?populate=*`;
+      const url =
+        STRAPI_API +
+        `/api/products?populate=*&pagination[page]=1&pagination[pageSize]=200`;
 
       const response = await fetch(url, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           // Add any authentication headers if needed
           // 'Authorization': `Bearer ${token}`,
         },
@@ -70,12 +71,11 @@ export const useProducts = (options = {}) => {
         setProducts(data.data);
         setTotalCount(data.total || data.count || data.data.length);
       } else {
-        throw new Error('Invalid API response structure');
+        throw new Error("Invalid API response structure");
       }
-
     } catch (err) {
       setError(err.message);
-      console.error('Error fetching products:', err);
+      console.error("Error fetching products:", err);
     } finally {
       setLoading(false);
     }
@@ -86,7 +86,18 @@ export const useProducts = (options = {}) => {
     if (autoFetch) {
       fetchProducts();
     }
-  }, [page, limit, category, search, minPrice, maxPrice, inStock, sortBy, sortOrder, autoFetch]);
+  }, [
+    page,
+    limit,
+    category,
+    search,
+    minPrice,
+    maxPrice,
+    inStock,
+    sortBy,
+    sortOrder,
+    autoFetch,
+  ]);
 
   // Manual refetch function
   const refetch = () => {
@@ -99,7 +110,7 @@ export const useProducts = (options = {}) => {
     error,
     totalCount,
     refetch,
-    fetchProducts
+    fetchProducts,
   };
 };
 
@@ -114,12 +125,15 @@ export const useProduct = (productId) => {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(STRAPI_API + `/api/products/${productId}?populate=*`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        STRAPI_API + `/api/products/${productId}?populate=*`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -127,10 +141,9 @@ export const useProduct = (productId) => {
 
       const data = await response.json();
       setProduct(data);
-
     } catch (err) {
       setError(err.message);
-      console.error('Error fetching product:', err);
+      console.error("Error fetching product:", err);
     } finally {
       setLoading(false);
     }
@@ -146,7 +159,7 @@ export const useProduct = (productId) => {
     product,
     loading,
     error,
-    refetch: fetchProduct
+    refetch: fetchProduct,
   };
 };
 
@@ -160,8 +173,8 @@ export const useCategories = () => {
     const fetchCategories = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/categories');
-        if (!response.ok) throw new Error('Failed to fetch categories');
+        const response = await fetch("/api/categories");
+        if (!response.ok) throw new Error("Failed to fetch categories");
         const data = await response.json();
         setCategories(Array.isArray(data) ? data : data.categories || []);
       } catch (err) {

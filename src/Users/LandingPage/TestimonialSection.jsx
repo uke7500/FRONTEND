@@ -3,7 +3,7 @@ import { Testimonials } from "../../data/data";
 
 function TestimonialSection() {
   return (
-    <section>
+    <section className="mt-80 lg:mt-0">
       <div className="heading mb-8 mt-10">
         <h1 className="text-center text-4xl font-bold text-[#4CAF50] pb-4">
           Testimonials

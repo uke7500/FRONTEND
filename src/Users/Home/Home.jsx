@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import HomepageProductCard from "../../components/ProductCard/HomepageProductCard";
 import { useProducts } from "../../Hooks/Product";
 import { SlidersHorizontal, X, Filter } from "lucide-react";
 import PriceRangeSlider from "./PriceRangeSlider";
-import HeroSection from "../../assets/HeroSection.png";
+import Hero1 from "../../assets/HeroSection.png";
+import Hero2 from "../../assets/HeroSection1.png";
+import Hero3 from "../../assets/HeroSection2.png";
 import { Link } from "react-router-dom";
 import useTags from "../../Hooks/useTags";
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
 
 const Home = () => {
   const [selectedCamera, setSelectedCamera] = useState([]);
+  const [selectedCompany, setSelectedCompany] = useState(null);
   const [selectedPage, setSelectedPage] = useState(5);
   const [priceRange, setPriceRange] = useState([0, 1000]); // [min, max]
   const [selectedStock, setSelectedStock] = useState("Available in Stock");
@@ -17,6 +20,21 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(10);
   const [tags, setTags] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const images = [Hero1, Hero2, Hero3];
+
+  // Automatically change image every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 3000); // 3 seconds
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  const companies = ["DAHUA", "HIK VISION", "EZVIZ"]; // fixed company names
 
   const handleCameraToggle = (tagName) => {
     setSelectedCamera(
@@ -42,31 +60,75 @@ const Home = () => {
     setSelectedCamera([]);
   };
 
-  const FilterSection = () => (
+  const handleClearCompany = () => {
+    setSelectedCompany(null);
+  };
+
+  const handleCompanySelect = (company) => {
+    setSelectedCompany(company);
+  };
+
+  // Inside your component:
+  const scrollRef = useRef(null);
+  const scrollPosition = useRef(0);
+
+  // Save scroll position before state updates
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollPosition.current;
+    }
+  }, [selectedCamera]); // Runs after selectedCamera changes
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      scrollPosition.current = scrollRef.current.scrollTop;
+    }
+  };
+
+  const FilterSection = useMemo(() => (
     <div className="space-y-6 md:space-y-8">
       {/* Filter Header */}
-      <div className="flex justify-between items-center">
-        <span className="text-2xl md:text-3xl font-medium text-white flex items-center gap-2">
-          Filter Products
-          <SlidersHorizontal size={24} className="md:hidden" />
-          <SlidersHorizontal size={32} className="hidden md:block" />
-        </span>
-        {/* Close button for mobile & tablet */}
-        <button
-          onClick={() => setIsFilterOpen(false)}
-          className="xl:hidden text-white hover:text-gray-300 transition-colors"
-        >
-          <X size={24} />
-        </button>
+      <div className="flex flex-col justify-between items-start">
+        <h1 className="text-lg md:text-xl font-bold mb-3 text-white">
+          Categories
+        </h1>
+        <div className="space-y-3 md:space-y-4">
+          {companies.map((company) => (
+            <button
+              key={company}
+              onClick={() => handleCompanySelect(company)}
+              className={`w-full text-black text-left px-4 py-2 rounded-lg font-medium ${
+                selectedCompany === company
+                  ? "bg-emerald-500 text-black"
+                  : "bg-gray-200 text-black hover:bg-gray-300"
+              }`}
+            >
+              {company}
+            </button>
+          ))}
+        </div>
+        <div>
+          <button
+            onClick={handleClearCompany}
+            className="bg-emerald-500 px-6 text-lg py-1 rounded-lg mt-4 cursor-pointer hover:bg-emerald-600"
+          >
+            Clear
+          </button>
+        </div>
       </div>
 
       {/* Camera Type Filter */}
       <div>
         <h1 className="text-lg md:text-xl font-bold mb-3 text-white">
-          Categories
+          Sub Categories
         </h1>
+
         <div className="bg-white backdrop-blur-sm border border-white/20 rounded-2xl p-4 md:p-6 shadow-lg">
-          <div className="space-y-3 md:space-y-4 h-50 overflow-y-scroll">
+          <div
+            ref={scrollRef}
+            onScroll={handleScroll}
+            className="space-y-3 md:space-y-4 h-50 overflow-y-scroll overscroll-behavior-contain"
+          >
             {tags.data &&
               tags.data.map((tag) => (
                 <label
@@ -111,90 +173,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* <hr className="border-white/30 border-t-2" /> */}
-
-      {/* Specifications Filter */}
-      {/* <div>
-        <h1 className="text-lg md:text-xl font-bold mb-3 text-white">
-          Sub Categories
-        </h1>
-        <div className="bg-white backdrop-blur-sm border border-white/20 rounded-2xl p-4 md:p-6 shadow-lg">
-          <div className="grid grid-cols-3 gap-2 md:gap-3 mb-3 md:mb-4">
-            {["2mb", "6mb", "10mb"].map((spec) => (
-              <button
-                key={spec}
-                onClick={() => handleSpecToggle(spec)}
-                className={`px-2 py-2 md:px-4 md:py-2 rounded-lg cursor-pointer font-medium transition-all text-xs md:text-sm ${
-                  selectedSpecs.includes(spec)
-                    ? "bg-emerald-500 text-white"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
-              >
-                {spec}
-              </button>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3 mb-3 md:mb-4">
-            {["Night Vision Camera", "HKR"].map((spec) => (
-              <button
-                key={spec}
-                onClick={() => handleSpecToggle(spec)}
-                className={`px-2 py-2 md:px-4 md:py-2 rounded-lg cursor-pointer font-medium transition-all text-xs md:text-sm ${
-                  selectedSpecs.includes(spec)
-                    ? "bg-emerald-500 text-white"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
-              >
-                {spec}
-              </button>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
-            {["HD", "360 Rotation Camera"].map((spec) => (
-              <button
-                key={spec}
-                onClick={() => handleSpecToggle(spec)}
-                className={`px-2 py-2 md:px-4 md:py-2 rounded-lg cursor-pointer font-medium transition-all text-xs md:text-sm ${
-                  selectedSpecs.includes(spec)
-                    ? "bg-emerald-500 text-white"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
-              >
-                {spec}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div> */}
-
-      <hr className="border-white/30 border-t-2" />
-
-      {/* Rating */}
-      <div>
-        <h1 className="text-lg md:text-xl font-bold mb-3 text-white">
-          Product Rating
-        </h1>
-        <div className="bg-white backdrop-blur-sm border border-white/20 rounded-2xl p-4 md:p-6 shadow-lg">
-          <div className="flex space-x-2">
-            {[1, 2, 3, 4, 5].map((rating) => (
-              <button
-                key={rating}
-                onClick={() => setSelectedPage(rating)}
-                className={`w-10 h-10 md:w-12 md:h-12 rounded-xl cursor-pointer font-semibold transition-all text-sm md:text-base ${
-                  selectedPage === rating
-                    ? "bg-emerald-500 text-white shadow-lg"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
-              >
-                {rating}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
       <hr className="border-white/30 border-t-2" />
 
       {/* Price Range Chart */}
@@ -226,16 +204,20 @@ const Home = () => {
         </div>
       </div>
     </div>
-  );
+  ));
 
   const filteredProducts = products.filter((product) => {
     const name = product?.name?.toLowerCase() || "";
     const description = product?.description?.toLowerCase() || "";
+    const model_no = product?.model_no?.toUpperCase() || "";
     const query = searchQuery.toLowerCase();
     const price = product?.price || 0;
 
     // 1. Search filter
-    const matchesSearch = name.includes(query) || description.includes(query);
+    const matchesSearch =
+      name.includes(query) ||
+      description.includes(query) ||
+      model_no.includes(query.toUpperCase());
 
     // 2. Tag filter (AND condition: product must have all selected tags)
     const matchesTags =
@@ -247,27 +229,65 @@ const Home = () => {
     // 3. Price filter
     const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
 
-    return matchesSearch && matchesTags && matchesPrice;
+    // 4. Company filter
+    const matchesCompany = selectedCompany
+      ? product.brand === selectedCompany
+      : true;
+
+    const handleSelectedStockOption = () => {
+      if (selectedStock === "On sale") {
+        return;
+      } else if (selectedStock === "Out of Stock") {
+        return product.stock === 0;
+      } else if (selectedStock === "Available in Stock") {
+        return product.stock > 0;
+      } else {
+        return true; // No stock filter applied
+      }
+    };
+
+    // 5. Stock filter
+    const matchesStock = handleSelectedStockOption();
+
+    // selectedStock === "Available in Stock" ? product.stock > 0 : true;
+
+    return (
+      matchesSearch &&
+      matchesTags &&
+      matchesPrice &&
+      matchesCompany &&
+      matchesStock
+    );
   });
 
   const visibleProducts = filteredProducts.slice(0, visibleCount);
 
-  // if (loading) return <LoadingSpinner />;
+  if (loading) return <LoadingSpinner />;
 
   if (error) return <h1>{error}</h1>;
 
   return (
     <div className="flex flex-col">
       {/* Header Section */}
-      <div className="flex justify-center flex-col lg:flex-row bg-gradient-to-r from-[#FFFFFF] to-[#4CAF50] min-h-[300px] md:min-h-[400px] lg:h-[500px] -mt-[74px] items-center gap-8 lg:gap-32 px-4 md:px-8 lg:px-16 py-8 lg:py-0">
+      <div className="flex justify-center flex-col lg:flex-row bg-gradient-to-r from-[#FFFFFF] to-[#4CAF50] min-h-[300px] md:min-h-[400px] lg:h-[500px] -mt-[74px] items-center gap-8 lg:gap-32 px-4 md:px-8 lg:px-16 py-8 lg:py-0 transition-all duration-500">
+        {/* Text Section */}
         <h1 className="mt-20 lg:mt-0 text-3xl md:text-4xl lg:text-6xl font-bold text-black text-center lg:text-left">
           Explore Our Products
         </h1>
-        <img
-          className="h-[150px] md:h-[200px] lg:h-[300px]"
-          src={HeroSection}
-          alt="Hero Section"
-        />
+
+        {/* Image Slideshow Section */}
+        <div className="relative h-[180px] md:h-[200px] lg:h-[400px] w-[180px] md:w-[200px] lg:w-[400px] ">
+          {images.map((img, index) => (
+            <img
+              key={index}
+              src={img}
+              alt={`Hero ${index + 1}`}
+              className={`absolute top-0 left-0 w-full h-full object-contain  transition-opacity duration-700 ease-in-out ${
+                index === currentIndex ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Main Content Section */}
@@ -276,17 +296,16 @@ const Home = () => {
         {isFilterOpen && (
           <div className="xl:hidden fixed inset-0 bg-black bg-opacity-50 z-50">
             <div className="absolute top-0 left-0 right-0 bottom-0 overflow-y-auto">
-              <div className="p-4">
-                <FilterSection />
-              </div>
+              <div className="p-4">{FilterSection}</div>
             </div>
           </div>
         )}
 
         {/* PC & Laptop Filtering Section */}
+        {/* Inside your render */}
         <div className="hidden xl:block xl:w-80 2xl:w-96 mt-6 xl:mt-12 xl:ml-5 flex-shrink-0">
           <div className="border border-gray-400 rounded-3xl p-6 xl:p-10 sticky top-6">
-            <FilterSection />
+            {FilterSection}
           </div>
         </div>
 

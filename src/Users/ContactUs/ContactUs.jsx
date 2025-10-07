@@ -53,14 +53,14 @@ const ContactUs = () => {
       {/* Contact Information & Form */}
       <div className="py-16">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="">
             {/* Contact Information */}
-            <div>
-              <h2 className="text-3xl font-bold mb-8 text-green-400">
+            <div className="mx-auto">
+              <h2 className="text-3xl text-left font-bold mb-8 text-green-400">
                 Get In Touch
               </h2>
 
-              <div className="space-y-6">
+              <div className="space-y-6 grid lg:grid-cols-2 md:place-items-start gap-12">
                 <div className="flex items-start space-x-4">
                   <MapPin className="w-6 h-6 text-green-400 mt-1" />
                   <div>
@@ -79,8 +79,7 @@ const ContactUs = () => {
                   <Phone className="w-6 h-6 text-green-400 mt-1" />
                   <div>
                     <h4 className="font-bold mb-1">Phone</h4>
-                    <p className="text-gray-300">+1 (555) 123-4567</p>
-                    <p className="text-gray-300">+1 (555) 987-6543</p>
+                    <p className="text-gray-300">+44 0793452753</p>
                   </div>
                 </div>
 
@@ -88,8 +87,9 @@ const ContactUs = () => {
                   <Mail className="w-6 h-6 text-green-400 mt-1" />
                   <div>
                     <h4 className="font-bold mb-1">Email</h4>
-                    <p className="text-gray-300">info@securitycompany.com</p>
-                    <p className="text-gray-300">support@securitycompany.com</p>
+                    <p className="text-gray-300">
+                      patelsecuresolution@gmail.com
+                    </p>
                   </div>
                 </div>
 
@@ -98,11 +98,7 @@ const ContactUs = () => {
                   <div>
                     <h4 className="font-bold mb-1">Business Hours</h4>
                     <p className="text-gray-300">
-                      Monday - Friday: 8:00 AM - 6:00 PM
-                    </p>
-                    <p className="text-gray-300">Saturday: 9:00 AM - 4:00 PM</p>
-                    <p className="text-gray-300">
-                      Sunday: Emergency Support Only
+                      Monday–Sunday 9:00 AM – 7:00 PM
                     </p>
                   </div>
                 </div>
@@ -117,112 +113,8 @@ const ContactUs = () => {
                   For urgent security matters or system failures:
                 </p>
                 <p className="text-red-400 font-bold">
-                  Emergency Hotline: +1 (555) 911-HELP
+                  Emergency Contact: +44 0793452753
                 </p>
-              </div>
-            </div>
-
-            {/* Contact Form */}
-            <div className="bg-gray-900 p-8 rounded-lg">
-              <h3 className="text-2xl font-bold mb-6">Send us a Message</h3>
-
-              {isSubmitted && (
-                <div className="mb-6 bg-green-900 bg-opacity-30 border border-green-500 rounded-lg p-4 flex items-center space-x-3">
-                  <CheckCircle className="w-5 h-5 text-green-400" />
-                  <span className="text-green-400">
-                    Message sent successfully! We'll get back to you soon.
-                  </span>
-                </div>
-              )}
-
-              <div className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">
-                      Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-green-400 focus:outline-none text-white"
-                      placeholder="Your full name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-green-400 focus:outline-none text-white"
-                      placeholder="your.email@example.com"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">
-                      Phone
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-green-400 focus:outline-none text-white"
-                      placeholder="(555) 123-4567"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">
-                      Subject
-                    </label>
-                    <select
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-green-400 focus:outline-none text-white"
-                    >
-                      <option value="">Select a subject</option>
-                      <option value="general">General Inquiry</option>
-                      <option value="quote">Request Quote</option>
-                      <option value="support">Technical Support</option>
-                      <option value="installation">Installation Service</option>
-                      <option value="partnership">Partnership</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Message *
-                  </label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    required
-                    rows={6}
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-green-400 focus:outline-none text-white resize-none"
-                    placeholder="Tell us about your security needs..."
-                  />
-                </div>
-
-                <button
-                  onClick={handleSubmit}
-                  className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center justify-center space-x-2 cursor-pointer"
-                >
-                  <Send className="w-5 h-5" />
-                  <span>Send Message</span>
-                </button>
               </div>
             </div>
           </div>

@@ -3,9 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const loadFromLocalStorage = () => {
   try {
     const data = localStorage.getItem("cart");
-    return data
-      ? JSON.parse(data)
-      : { productData: [], totalPrice: 0 };  // return object not array
+    return data ? JSON.parse(data) : { productData: [], totalPrice: 0 }; // return object not array
   } catch {
     return { productData: [], totalPrice: 0 };
   }
@@ -20,7 +18,7 @@ const saveToLocalStorage = (state) => {
         totalPrice: state.totalPrice,
       })
     );
-  } catch { }
+  } catch {}
 };
 
 const initialState = {
@@ -43,9 +41,9 @@ const productSlice = createSlice({
       );
 
       if (existingProduct) {
-        existingProduct.quantity += 1;
+        existingProduct.quantity += product.quantity || 1; // Add selected quantity
       } else {
-        state.productData.push({ ...product, quantity: 1 });
+        state.productData.push({ ...product, quantity: product.quantity || 1 }); // Use selected quantity
       }
 
       state.totalPrice = calculateTotal(state.productData);

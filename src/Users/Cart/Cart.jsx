@@ -16,14 +16,13 @@ const Cart = () => {
   const { productData, totalPrice } = useSelector((store) => store.product);
   const { discount, promoCodeStore } = useSelector((store) => store.delivery);
 
-  const shipping = 0;
+  let shipping = null;
+  totalPrice > 200 ? shipping = 0 : shipping = 20;
   const total = totalPrice - discount + shipping;
 
   // Example promo codes
   const promoCodes = {
-    SAVE10: 10,
-    SAVE20: 20,
-    DEAL50: 50,
+    SECURE10: 10,
   };
 
   const handleApplyPromo = () => {
@@ -114,7 +113,11 @@ const Cart = () => {
               </div>
               <div className="flex justify-between text-sm md:text-base">
                 <span className="text-gray-400">Shipping:</span>
-                <span className="text-green-400">Free</span>
+                {total > 200 ? (
+                  <span className="text-green-400">Free</span>
+                ) : (
+                  <span className="text-green-400">£20.00</span>
+                )}
               </div>
               <div className="flex justify-between text-sm md:text-base">
                 <span className="text-gray-400">Discount:</span>
@@ -125,8 +128,14 @@ const Cart = () => {
                 <span className="text-white">Cart Total:</span>
                 <span className="text-green-400">£{total.toFixed(2)}</span>
               </div>
-              <NavLink to="/cart/productdelivery">
-                <button className="w-full bg-green-600 hover:bg-green-700 text-white py-2 md:py-3 rounded font-medium mt-3 md:mt-4 text-sm md:text-base cursor-pointer">
+              <NavLink to={totalPrice > 0 ? "/cart/productdelivery" : "#"}>
+                <button
+                  className={`w-full py-2 md:py-3 rounded font-medium mt-3 md:mt-4 text-sm md:text-base cursor-pointer ${
+                    totalPrice > 0
+                      ? "bg-green-500 hover:bg-green-600 text-white font-semibold"
+                      : "bg-gray-600 text-gray-300 cursor-not-allowed"
+                  }`}
+                >
                   Check Out
                 </button>
               </NavLink>

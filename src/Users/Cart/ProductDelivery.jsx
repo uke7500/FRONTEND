@@ -37,8 +37,7 @@ const ProductDelivery = () => {
       formData.city?.trim() &&
       formData.state?.trim() &&
       formData.cellPhone?.trim() &&
-      formData.deliveryTime?.trim() &&
-      formData.shippingType?.trim()
+      formData.deliveryTime?.trim()
     );
   };
 
@@ -73,47 +72,13 @@ const ProductDelivery = () => {
           <div className="bg-gray-800 rounded-lg p-6">
             <h3 className="text-xl font-bold mb-4">Shipping</h3>
 
-            {/* Standard Shipping */}
-            <div className="space-y-4">
-              <label className="flex items-start space-x-3 cursor-pointer">
-                <input
-                  type="radio"
-                  name="shipping"
-                  value="Standard"
-                  checked={formData.shippingType === "Standard"}
-                  onChange={(e) =>
-                    handleInputChange("shippingType", e.target.value)
-                  }
-                  className="mt-1 text-green-400 focus:ring-green-400"
-                />
-                <div>
-                  <p className="font-semibold">Standard Shipping</p>
-                  <p className="text-sm text-gray-400">
-                    Delivery is expected to delivered in 3 to 6 Working days if
-                    it free of cost
-                  </p>
-                </div>
-              </label>
-
-              <label className="flex items-start space-x-3 cursor-pointer">
-                <input
-                  type="radio"
-                  name="shipping"
-                  value="Express"
-                  checked={formData.shippingType === "Express"}
-                  onChange={(e) =>
-                    handleInputChange("shippingType", e.target.value)
-                  }
-                  className="mt-1 text-green-400 focus:ring-green-400"
-                />
-                <div>
-                  <p className="font-semibold">Express Shipping</p>
-                  <p className="text-sm text-gray-400">
-                    Delivery is expected to delivered in 1 to 2 Working days but
-                    charges upto £30
-                  </p>
-                </div>
-              </label>
+            <div className="flex flex-col gap-4">
+              <span>Orders are processed within 6-8 business days.</span>
+              <span>
+                Standard delivery within 8-10 working days across United
+                kingdom.
+              </span>
+              <span>Tracking details will be shared once dispatched.</span>
             </div>
 
             {/* ✅ Checkout Button (disabled until form is valid) */}

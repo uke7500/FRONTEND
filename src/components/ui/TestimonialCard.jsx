@@ -18,7 +18,7 @@ function TestimonialCard({ profileImage, name, rating, testimonial }) {
   return (
     <div className="bg-black p-8 rounded-3xl border-2 border-green-400 max-w-md mx-auto">
       {/* Profile Image */}
-      <div className="flex justify-center mb-6">
+      {/* <div className="flex justify-center mb-6">
         <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-600">
           <img
             src={profileImage}
@@ -26,7 +26,7 @@ function TestimonialCard({ profileImage, name, rating, testimonial }) {
             className="w-full h-full object-cover"
           />
         </div>
-      </div>
+      </div> */}
 
       {/* Customer Name */}
       <h3 className="text-green-400 text-2xl font-semibold text-center mb-6">

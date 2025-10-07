@@ -15,7 +15,9 @@ const Summary = () => {
 
       {/* Product Items */}
       <div className="space-y-4">
-        {productData.map((product) => <SummaryItem key={product.id} data={product} />)}
+        {productData.map((product) => (
+          <SummaryItem key={product.id} data={product} />
+        ))}
       </div>
 
       {/* Totals */}
@@ -26,7 +28,11 @@ const Summary = () => {
         </div>
         <div className="flex justify-between">
           <span>Shipping:</span>
-          <span className="text-green-400">Free</span>
+          {finalPrice > 200 ? (
+            <span className="text-green-400">Free</span>
+          ) : (
+            <span className="text-green-400">£20.00</span>
+          )}
         </div>
         <div className="flex justify-between text-red-400">
           <span>Discount</span>

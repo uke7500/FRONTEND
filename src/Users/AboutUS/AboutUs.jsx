@@ -28,21 +28,7 @@ const AboutUs = () => {
                 Our Story
               </h2>
               <p className="text-gray-300 mb-4">
-                Founded in 2015, we started as a small team of security
-                professionals with a vision to revolutionize how businesses and
-                homeowners protect what matters most. Today, we're proud to be a
-                leading provider of advanced security solutions.
-              </p>
-              <p className="text-gray-300 mb-4">
-                Our journey began with a simple belief: everyone deserves access
-                to professional-grade security technology. We've grown from a
-                startup to serving thousands of clients worldwide, but our core
-                mission remains unchanged.
-              </p>
-              <p className="text-gray-300">
-                We continue to innovate, bringing you the latest in surveillance
-                technology, access control, and 24/7 monitoring services that
-                adapt to your evolving security needs.
+               At Patel Security Solutions, we deliver advanced CCTV and surveillance systems designed to safeguard what matters most. With high-definition clarity, smart technology, and dependable round-the-clock performance, our security solutions make protection simple and effective. Easy to set up and built for long-lasting reliability, our systems empower you to monitor and manage your safety from anywhere. Families and businesses trust us because we provide more than just cameras—we provide confidence and complete peace of mind.
               </p>
             </div>
             <div className="bg-gray-800 p-8 rounded-lg">

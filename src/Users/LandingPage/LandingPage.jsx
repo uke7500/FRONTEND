@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeroSection from "./HeroSection";
 import FeatureSection from "./FeatureSection";
 import { AboutUs, WhyUS } from "../../data/data";
@@ -8,8 +8,24 @@ import TestimonialSection from "./TestimonialSection";
 import GetintouchSection from "./GetintouchSection";
 import ProductCard from "../../components/ProductCard/LandingpageProductCard";
 import BestProductSection from "./BestProductSection";
+import { useLocation } from "react-router-dom";
 
 const LandingPage = () => {
+  const { hash } = useLocation();
+
+  const scrollToHash = (hashValue) => {
+    if (!hashValue) return;
+    const el = document.querySelector(hashValue);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  // Scroll when page loads with a hash
+  useEffect(() => {
+    scrollToHash(hash);
+  }, [hash]);
+
   return (
     <div>
       <HeroSection />
@@ -26,7 +42,9 @@ const LandingPage = () => {
           ]}
           reverse={false}
         />
-        <OurServices />
+        <div id="service">
+          <OurServices />
+        </div>
         <BannerCard
           image={WhyUS.image}
           title={WhyUS.title}
@@ -35,7 +53,9 @@ const LandingPage = () => {
         />
         <BestProductSection />
         <GetintouchSection />
-        <TestimonialSection />
+        <div id="review">
+          <TestimonialSection />
+        </div>
       </div>
     </div>
   );

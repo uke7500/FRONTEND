@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateShipping } from "../../store/shippingSlice";
+import { Country } from "../../data/data";
 
 const ShippingForm = () => {
   const dispatch = useDispatch();
@@ -141,10 +142,11 @@ const ShippingForm = () => {
               onChange={(e) => handleInputChange("country", e.target.value)}
               onBlur={(e) => validateField("country", e.target.value)}
             >
-              <option value="">Select</option>
-              <option>United States</option>
-              <option>Canada</option>
-              <option>United Kingdom</option>
+              {Country.map((c) => (
+                <option key={c.name} value={c.name}>
+                  {c.name}
+                </option>
+              ))}
             </select>
             <ChevronDown
               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -160,7 +162,7 @@ const ShippingForm = () => {
       {/* City and State */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium mb-2">City</label>
+          <label className="block text-sm font-medium mb-2">Region</label>
           <div className="relative">
             <select
               required
@@ -169,10 +171,13 @@ const ShippingForm = () => {
               onChange={(e) => handleInputChange("city", e.target.value)}
               onBlur={(e) => validateField("city", e.target.value)}
             >
-              <option value="">Select</option>
-              <option>New York</option>
-              <option>Los Angeles</option>
-              <option>Chicago</option>
+              {Country.find((c) => c.name === formData.country)?.regions?.map(
+                (region) => (
+                  <option key={region} value={region}>
+                    {region}
+                  </option>
+                )
+              ) || <option value="">Select Country First</option>}
             </select>
             <ChevronDown
               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -184,7 +189,7 @@ const ShippingForm = () => {
           )}
         </div>
         <div>
-          <label className="block text-sm font-medium mb-2">State</label>
+          <label className="block text-sm font-medium mb-2">City</label>
           <div className="relative">
             <select
               required
@@ -193,10 +198,13 @@ const ShippingForm = () => {
               onChange={(e) => handleInputChange("state", e.target.value)}
               onBlur={(e) => validateField("state", e.target.value)}
             >
-              <option value="">Select</option>
-              <option>California</option>
-              <option>New York</option>
-              <option>Texas</option>
+              {Country.find((c) => c.name === formData.country)?.city?.map(
+                (city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                )
+              ) || <option value="">Select Region First</option>}
             </select>
             <ChevronDown
               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -218,9 +226,7 @@ const ShippingForm = () => {
               required
               className="bg-gray-800 border border-gray-600 rounded-l-lg px-3 py-3 text-white focus:outline-none focus:border-yellow-400"
             >
-              <option>+1</option>
               <option>+44</option>
-              <option>+91</option>
             </select>
             <input
               type="tel"

@@ -1,17 +1,48 @@
 import React, { useState } from "react";
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
+import { FiFacebook } from "react-icons/fi";
 import logo from "../../assets/UKE-Logo.png";
-import { Link } from "react-router-dom";
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Footer = () => {
-  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (email) {
-      alert("Thank you for subscribing!");
-      setEmail("");
+  // const goToReview = () => {
+  //   navigate("/#review");
+  // };
+
+  const goToReview = () => {
+    if (pathname !== "/") {
+      // Navigate to home page first
+      navigate("/", { replace: false });
+
+      // Wait a bit for DOM to render
+      setTimeout(() => {
+        const el = document.getElementById("review");
+        el?.scrollIntoView({ behavior: "smooth" });
+      }, 1350); // 100ms is usually enough
+    } else {
+      // Already on home → scroll directly
+      const el = document.getElementById("review");
+      el?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const goToServices = () => {
+    if (pathname !== "/") {
+      // Navigate to home page first
+      navigate("/", { replace: false });
+
+      // Wait a bit for DOM to render
+      setTimeout(() => {
+        const el = document.getElementById("service");
+        el?.scrollIntoView({ behavior: "smooth" });
+      }, 1350); // 100ms is usually enough
+    } else {
+      // Already on home → scroll directly
+      const el = document.getElementById("service");
+      el?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -31,8 +62,7 @@ const Footer = () => {
             {/* Description */}
             <div className="lg:text-right">
               <p className="text-gray-400 text-sm leading-relaxed max-w-md lg:ml-auto">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt
+                CCTV Cameras, Security Systems, and Installation Services
               </p>
             </div>
           </div>
@@ -41,17 +71,17 @@ const Footer = () => {
 
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Product Column */}
           <div>
             <h3 className="text-lg font-semibold mb-6">Product</h3>
             <ul className="space-y-4">
-              <li>
+              <li className="cursor-pointer">
                 <a
-                  href="#"
+                  onClick={goToServices}
                   className="text-gray-400 hover:text-white transition-colors text-sm"
                 >
-                  Features
+                  Services
                 </a>
               </li>
               <li>
@@ -70,9 +100,9 @@ const Footer = () => {
                   Case studies
                 </a>
               </li>
-              <li>
+              <li className="cursor-pointer">
                 <a
-                  href="#"
+                  onClick={goToReview}
                   className="text-gray-400 hover:text-white transition-colors text-sm"
                 >
                   Reviews
@@ -94,20 +124,24 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-6">Company</h3>
             <ul className="space-y-4">
               <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  About
-                </a>
+                <Link to="/about">
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition-colors text-sm"
+                  >
+                    About
+                  </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  Contact us
-                </a>
+                <Link to="/contact">
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition-colors text-sm"
+                  >
+                    Contact us
+                  </a>
+                </Link>
               </li>
               <li>
                 <a
@@ -149,12 +183,14 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  Help center
-                </a>
+                <Link to="/contact">
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition-colors text-sm"
+                  >
+                    Help center
+                  </a>
+                </Link>
               </li>
               <li>
                 <a
@@ -165,95 +201,79 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  Report a bug
-                </a>
+                <Link to="/contact">
+                  <a className="text-gray-400 hover:text-white transition-colors text-sm">
+                    Report a bug
+                  </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  Chat support
-                </a>
+                <Link to="/contact">
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition-colors text-sm"
+                  >
+                    Chat support
+                  </a>
+                </Link>
               </li>
             </ul>
           </div>
 
           {/* Downloads Column */}
           <div>
-            <h3 className="text-lg font-semibold mb-6">Downloads</h3>
-            <ul className="space-y-4">
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  iOS
+            <h3 className="text-lg font-semibold mb-6">Follow Us</h3>
+            <ul className="space-y-5">
+              {/* Facebook */}
+              <li className="flex gap-2 items-center cursor-pointer text-gray-400 hover:text-blue-500 transition-colors">
+                <span className="">
+                  <Facebook size={20} />
+                </span>
+                <a href="#" className="text-sm">
+                  Facebook
                 </a>
               </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  Android
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  Mac
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  Windows
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  Chrome
-                </a>
-              </li>
-            </ul>
-          </div>
 
-          {/* Newsletter Column */}
-          <div className="relative w-70 md:w-auto">
-            <h3 className="text-lg font-semibold mb-6">
-              Subscribe to our newsletter
-            </h3>
-            <p className="text-gray-400 text-sm mb-6 leading-relaxed">
-              Lorem ipsum dolor sit amet consectetur adipiscing elit aliquam
-              mauris sed ma
-            </p>
-            <div className="space-y-4">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full px-4 py-3 bg-white text-gray-900 rounded-full border-0 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
-              />
-              <button
-                onClick={handleSubscribe}
-                className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-medium transition-colors text-sm"
-              >
-                Subscribe
-              </button>
-            </div>
+              {/* Twitter */}
+              {/* <li className="flex gap-2 items-center cursor-pointer text-gray-400 hover:text-blue-400 transition-colors">
+                <span className="">
+                  <Twitter size={20} />
+                </span>
+                <a href="#" className="text-sm">
+                  Twitter
+                </a>
+              </li> */}
+
+              {/* Instagram */}
+              <li className="flex gap-2 items-center cursor-pointer text-gray-400 hover:text-pink-500 transition-colors">
+                <span className="">
+                  <Instagram size={20} />
+                </span>
+                <a href="#" className="text-sm">
+                  Instagram
+                </a>
+              </li>
+
+              {/* LinkedIn */}
+              {/* <li className="flex gap-2 items-center cursor-pointer text-gray-400 hover:text-blue-700 transition-colors">
+                <span className="">
+                  <Linkedin size={20} />
+                </span>
+                <a href="#" className="text-sm">
+                  LinkedIn
+                </a>
+              </li> */}
+
+              {/* YouTube */}
+              {/* <li className="flex gap-2 items-center cursor-pointer text-gray-400 hover:text-red-500 transition-colors">
+                <span className="">
+                  <Youtube size={20} />
+                </span>
+                <a href="#" className="text-sm">
+                  YouTube
+                </a>
+              </li> */}
+            </ul>
           </div>
         </div>
       </div>
@@ -264,11 +284,11 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             {/* Copyright */}
             <p className="text-gray-400 text-sm">
-              Copyright © 2025 | All Rights Reserved
+              Copyright © 2025 | All Rights Reserved | Patel Security Solutions
             </p>
 
             {/* Social Media Icons */}
-            <div className="flex space-x-4">
+            {/* <div className="flex space-x-4">
               <a
                 href="#"
                 className="text-gray-400 hover:text-green-500 transition-colors"
@@ -299,7 +319,7 @@ const Footer = () => {
               >
                 <Youtube size={20} />
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

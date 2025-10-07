@@ -19,7 +19,7 @@ const PaymentPage = () => {
   const { cartSubTotal, discount, finalPrice } = useSelector(
     (store) => store.delivery
   );
-  console.log("Final Price:", finalPrice.toFixed(2));
+  // console.log("Final Price:", finalPrice.toFixed(2));
   const productData = useSelector((store) => store.product.productData);
 
   const dispatch = useDispatch();
@@ -44,18 +44,14 @@ const PaymentPage = () => {
             <div className="my-6">
               <h3 className="text-lg font-semibold mb-2 flex items-center justify-between">
                 Shipping
-                <NavLink to="/cart/productdelivery">
-                  <button className="text-green-500 text-xs hover:underline cursor-pointer">
-                    View Shipping Details
-                  </button>
-                </NavLink>
               </h3>
-              <div>
-                <div className="text-sm font-medium mb-1">{shippingType}</div>
-                <div className="text-xs text-gray-400">
-                  Delivery is expected to be delivered in 3 to 6 Working days if
-                  it free of cost
-                </div>
+              <div className="flex flex-col gap-4">
+                <span>Orders are processed within 6-8 business days.</span>
+                <span>
+                  Standard delivery within 8-10 working days across United
+                  kingdom.
+                </span>
+                <span>Tracking details will be shared once dispatched.</span>
               </div>
             </div>
 

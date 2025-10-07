@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Star,
   Plus,
@@ -10,36 +10,57 @@ import {
 } from "lucide-react";
 import { useProduct } from "../../Hooks/Product";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addProductToCart } from "../../store/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addProductToCart, updateCartQuantity } from "../../store/productSlice";
 import ReactMarkdown from "react-markdown";
 import { useNotification } from "../../components/ui/NotificationContext";
 
 const ProductData = ({ productId }) => {
-  const [quantity, setQuantity] = useState(1);
+  // const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("information");
   const dispatch = useDispatch();
   const { notify } = useNotification();
+
+  const cartItem = useSelector((state) =>
+    (state.product.cart ?? []).find((item) => item.id === productId)
+  );
+  const [quantity, setQuantity] = useState(cartItem?.quantity || 1);
+
+  // Sync local quantity with Redux when cartItem changes
+  useEffect(() => {
+    if (cartItem) setQuantity(cartItem.quantity);
+  }, [cartItem]);
 
   const productData = useProduct(productId);
   const product = productData?.product?.data;
 
   const handleQuantityChange = (action) => {
+    let newQuantity = quantity;
     if (action === "increment") {
-      setQuantity((prev) => prev + 1);
+      newQuantity = quantity + 1;
     } else if (action === "decrement" && quantity > 1) {
-      setQuantity((prev) => prev - 1);
+      newQuantity = quantity - 1;
     }
+    setQuantity(newQuantity);
+    dispatch(updateCartQuantity({ id: product.id, quantity: newQuantity }));
   };
 
   const handleAddToCart = () => {
-    dispatch(addProductToCart(product));
+    dispatch(addProductToCart({ ...product, id: product.id, quantity }));
     notify("Item added to cart!", "success");
   };
 
   const handleBuyNow = () => {
     dispatch(addProductToCart(product));
   };
+
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-gray-400">Loading product...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen text-white my-10">
@@ -63,21 +84,6 @@ const ProductData = ({ productId }) => {
 
               <h1 className="text-2xl mt-2">Product Name</h1>
               <h1 className="text-3xl font-bold mt-2">{product?.name}</h1>
-
-              {/* Rating */}
-              {/* <div className="flex items-center mt-3">
-                <div className="flex space-x-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="w-4 h-4 fill-yellow-400 text-yellow-400"
-                    />
-                  ))}
-                </div>
-                <span className="ml-2 text-sm text-gray-400">
-                  {product?.reviews} Reviews
-                </span>
-              </div> */}
             </div>
 
             {/* Price */}
@@ -129,41 +135,14 @@ const ProductData = ({ productId }) => {
         {/* Product Information Tabs */}
         <div className="mt-16 bg-[#272727] p-10 rounded-lg">
           <div className="flex flex-col sm:flex-row border-b border-gray-700">
-            <button
-              onClick={() => setActiveTab("information")}
-              className={`px-6 py-3 font-medium cursor-pointer ${
-                activeTab === "information"
-                  ? "text-white border-b-2 border-green-500"
-                  : "text-gray-400 hover:text-white"
-              }`}
-            >
-              Product Information
-            </button>
-            <button
-              onClick={() => setActiveTab("delivery")}
-              className={`px-6 py-3 font-medium cursor-pointer ${
-                activeTab === "delivery"
-                  ? "text-white border-b-2 border-green-500"
-                  : "text-gray-400 hover:text-white"
-              }`}
-            >
-              Delivery & Returns
-            </button>
-            <button
-              onClick={() => setActiveTab("reviews")}
-              className={`px-6 py-3 font-medium cursor-pointer ${
-                activeTab === "reviews"
-                  ? "text-white border-b-2 border-green-500"
-                  : "text-gray-400 hover:text-white"
-              }`}
-            >
-              Reviews
-            </button>
+            
+              <span className="text-white border-b-2 border-green-500 px-6 py-3 font-medium cursor-pointer">Product Information</span>
+              
           </div>
 
           <div className="py-8">
-            {activeTab === "information" && (
-              <div className="mt-8">
+            {(
+              <div className="mt-2">
                 <p className="text-gray-300 prose prose-invert leading-relaxed">
                   <ReactMarkdown
                     components={{
@@ -196,79 +175,6 @@ const ProductData = ({ productId }) => {
               </div>
             )}
 
-            {activeTab === "delivery" && (
-              <div className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div>
-                    <h3 className="text-lg font-semibold mb-4">
-                      Delivery Information
-                    </h3>
-                    <div className="space-y-3 text-sm text-gray-300">
-                      <p>• Free delivery on orders over £100</p>
-                      <p>• Standard delivery: 3-5 business days</p>
-                      <p>• Express delivery: 1-2 business days</p>
-                      <p>• Installation service available</p>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold mb-4">
-                      Return Policy
-                    </h3>
-                    <div className="space-y-3 text-sm text-gray-300">
-                      <p>• 30-day return policy</p>
-                      <p>• Free returns on defective items</p>
-                      <p>• Original packaging required</p>
-                      <p>• Warranty: 2 years manufacturer warranty</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeTab === "reviews" && (
-              <div className="space-y-6">
-                <div className="flex items-center space-x-4">
-                  <div className="text-3xl font-bold">5.0</div>
-                  <div>
-                    <div className="flex space-x-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="w-5 h-5 fill-yellow-400 text-yellow-400"
-                        />
-                      ))}
-                    </div>
-                    <p className="text-sm text-gray-400 mt-1">
-                      Based on {product.reviews} reviews
-                    </p>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  {[...Array(3)].map((_, i) => (
-                    <div key={i} className="border-b border-gray-700 pb-4">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <div className="flex space-x-1">
-                          {[...Array(5)].map((_, j) => (
-                            <Star
-                              key={j}
-                              className="w-4 h-4 fill-yellow-400 text-yellow-400"
-                            />
-                          ))}
-                        </div>
-                        <span className="text-sm text-gray-400">
-                          Anonymous User
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-300">
-                        Excellent camera quality with crystal clear night
-                        vision. Easy to install and great value for money.
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>

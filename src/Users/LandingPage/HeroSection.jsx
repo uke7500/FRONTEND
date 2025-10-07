@@ -1,14 +1,14 @@
 import React from "react";
 // import { useSelector } from "react-redux";
 import { Link} from "react-router-dom";
-import landingpage_image from "../../assets/landingpage_image.png";
+import landingpage_image from "../../assets/check.png";
 
 
 const HeroSection = () => {
   // const user = useSelector((store)=>store.store.user)
   return (
     <section
-      className="relative bg-black text-white top-0 h-[120vh] flex items-center justify-center bg-cover bg-center"
+      className="relative bg-black text-white top-0 h-[100vh] flex items-center justify-center bg-cover bg-center"
       style={{
         backgroundImage: `url(${landingpage_image})`, 
       }}
@@ -30,7 +30,7 @@ const HeroSection = () => {
             Shop Now
           </Link>
           <Link
-            to="/products"
+            to="/home"
             className="border border-white hover:bg-white hover:text-black font-semibold px-6 py-2 rounded transition"
           >
             View Products
