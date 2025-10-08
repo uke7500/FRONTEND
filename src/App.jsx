@@ -27,6 +27,8 @@ import NotificationContainer from "./components/ui/NotificationContainer";
 import PrivacyPolicy from "./Users/PrivacyPolicy/PrivacyPolicy";
 import ScrollToTop from "./components/ui/ScrollToTop";
 
+import PaymentProtectedRoute from "./components/Cart/PaymentProtectedRoute";
+
 function App() {
   const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
   return (
@@ -68,7 +70,11 @@ function App() {
                 />
                 <Route
                   path="/cart/productdelivery/paymentinfo/paymentconfirmation"
-                  element={<OrderConfirmation />}
+                  element={
+                    <PaymentProtectedRoute>
+                      <OrderConfirmation />
+                    </PaymentProtectedRoute>
+                  }
                 />
                 {/* <Route path="/profile" element={<Profile />} /> */}
                 {/* <Route element={<PrivateRoute />}></Route> */}

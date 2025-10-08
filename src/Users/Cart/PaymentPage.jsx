@@ -8,6 +8,7 @@ import { clearShipping, updateShipping } from "../../store/shippingSlice";
 import createStrapiOrder from "../../api/createStrapiOrder";
 import Stepper from "../../components/ui/Stepper";
 import { clearCart } from "../../store/productSlice";
+import { clearDiscount, clearPromoData } from "../../store/deliverySlice";
 
 const PaymentPage = () => {
   const formData = useSelector((state) => state.shipping);
@@ -16,15 +17,18 @@ const PaymentPage = () => {
 
   const navigate = useNavigate();
 
-  const { cartSubTotal, discount, finalPrice } = useSelector(
+  const { cartSubTotal, discount, shipping, finalPrice } = useSelector(
     (store) => store.delivery
   );
   // console.log("Final Price:", finalPrice.toFixed(2));
   const productData = useSelector((store) => store.product.productData);
 
+  console.log(shipping);
+
   const dispatch = useDispatch();
 
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  // const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const BACKEND_URL = "http://localhost:5000";
 
   return (
     <div className="min-h-screen bg-black text-white p-6">
@@ -115,6 +119,7 @@ const PaymentPage = () => {
                       productData,
                       cartSubTotal,
                       discount,
+                      shipping,
                       finalPrice,
                       orderId: data.orderID,
                     });
@@ -148,10 +153,11 @@ const PaymentPage = () => {
                       "Transaction completed by " +
                         (formData.firstName || "Unknown Buyer")
                     );
+                    // After payment success
+                    localStorage.setItem("paymentSuccess", "true");
                     navigate(
                       "/cart/productdelivery/paymentinfo/paymentconfirmation"
                     );
-                    dispatch(clearCart());
                     dispatch(clearShipping());
                   } catch (error) {
                     console.error("Payment process failed:", error);

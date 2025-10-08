@@ -2,12 +2,24 @@ import React from "react";
 import { Check } from "lucide-react";
 import Summary from "../../components/Cart/Summary";
 import Stepper from "../../components/ui/Stepper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
+import { clearCart } from "../../store/productSlice";
+import { clearDiscount } from "../../store/deliverySlice";
 
 const OrderConfirmation = () => {
   const shippingType = useSelector((state) => state.shipping.shippingType);
   const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL;
+  // const FRONTEND_URL = "http://localhost:5173";
+
+  const dispatch = useDispatch();
+
+  const handleButton = () => {
+    localStorage.setItem("paymentSuccess", "false");
+    dispatch(clearCart());
+    dispatch(clearDiscount());
+  };
+
   return (
     <div className="min-h-screen  text-white p-6">
       {/* Progress Bar Placeholder */}
@@ -40,7 +52,10 @@ const OrderConfirmation = () => {
           {/* Action Button */}
           <div className="pt-4">
             <Link to={FRONTEND_URL}>
-              <button className="border border-green-500 text-green-500 hover:bg-green-500 hover:text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200 w-full max-w-xs">
+              <button
+                onClick={handleButton}
+                className="border border-green-500 text-green-500 hover:bg-green-500 hover:text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200 w-full max-w-xs"
+              >
                 Back to Home Page
               </button>
             </Link>
@@ -57,9 +72,13 @@ const OrderConfirmation = () => {
             </h3>
             <div>
               <div className="text-sm font-medium mb-1">{shippingType}</div>
-              <div className="text-xs text-gray-400">
-                Delivery is expected to be delivered in 3 to 6 Working days if
-                it free of cost
+              <div className="flex flex-col gap-4">
+                <span>Orders are processed within 6-8 business days.</span>
+                <span>
+                  Standard delivery within 8-10 working days across United
+                  kingdom.
+                </span>
+                <span>Tracking details will be shared once dispatched.</span>
               </div>
             </div>
           </div>

@@ -3,6 +3,7 @@
 const createStrapiOrder = async ({
   productData,
   cartSubTotal,
+  shipping,
   discount,
   finalPrice,
   orderId,
@@ -13,11 +14,11 @@ const createStrapiOrder = async ({
     const shippingInfo = await fetch(STRAPI_API + "/api/shippings");
     const shippingData = await shippingInfo.json();
 
-    const shipping = shippingData.data.filter(
+    const shippingTemp = shippingData.data.filter(
       (item) => item.order_id == orderId
     );
 
-    const shipping_documentId = shipping[0]?.documentId;
+    const shipping_documentId = shippingTemp[0]?.documentId;
     // console.log("Shipping Document ID:", shipping_documentId);
 
     // build orderItems from productData
@@ -36,6 +37,7 @@ const createStrapiOrder = async ({
                     total_price: finalPrice.toFixed(2),
                     cart_subtotal_price: cartSubTotal,
                     discount,
+                    shipping_charges: shipping,
                     order_item: orderItems,
                     shipping: shipping_documentId,
                 },

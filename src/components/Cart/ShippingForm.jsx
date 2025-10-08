@@ -25,7 +25,7 @@ const ShippingForm = () => {
         if (!value.trim()) error = "Address is required";
         break;
       case "zipCode":
-        if (!/^\d{4,10}$/.test(value)) error = "Enter a valid Zip Code";
+        if (!(value).trim()) error = "Enter a valid Postal Code";
         break;
       case "country":
         if (!value.trim()) error = "Please select a Country";
@@ -118,7 +118,7 @@ const ShippingForm = () => {
       {/* Zip Code and Country */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium mb-2">Zip Code</label>
+          <label className="block text-sm font-medium mb-2">Postal Code</label>
           <input
             required
             type="text"

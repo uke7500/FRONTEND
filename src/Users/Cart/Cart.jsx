@@ -25,6 +25,8 @@ const Cart = () => {
     SECURE10: 10,
   };
 
+  console.log(shipping);
+
   const handleApplyPromo = () => {
     const upperCode = promoCode.trim().toUpperCase();
     const discountValue = promoCodes[upperCode] || 0;
@@ -33,6 +35,7 @@ const Cart = () => {
       addCartData({
         cartSubTotal: totalPrice,
         discount: discountValue,
+        shipping: shipping,
         finalPrice: totalPrice - discountValue + shipping,
         promoCodeStore: upperCode,
       })
@@ -51,6 +54,7 @@ const Cart = () => {
       addCartData({
         cartSubTotal: totalPrice,
         discount,
+        shipping: shipping,
         finalPrice: totalPrice - discount + shipping,
         promoCodeStore,
       })
