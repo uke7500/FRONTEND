@@ -249,7 +249,10 @@ const Footer = () => {
                 <span className="">
                   <Instagram size={20} />
                 </span>
-                <a href="#" className="text-sm">
+                <a
+                  href="https://www.instagram.com/patelsecuritysolution096?igsh=MTkwZzNjbDhmZmwxYw=="
+                  className="text-sm"
+                >
                   Instagram
                 </a>
               </li>

@@ -17,7 +17,7 @@ const Cart = () => {
   const { discount, promoCodeStore } = useSelector((store) => store.delivery);
 
   let shipping = null;
-  totalPrice > 200 ? shipping = 0 : shipping = 20;
+  totalPrice > 200 ? shipping = 0 : shipping = 8.99;
   const total = totalPrice - discount + shipping;
 
   // Example promo codes
@@ -120,7 +120,7 @@ const Cart = () => {
                 {total > 200 ? (
                   <span className="text-green-400">Free</span>
                 ) : (
-                  <span className="text-green-400">£20.00</span>
+                  <span className="text-green-400">£8.99</span>
                 )}
               </div>
               <div className="flex justify-between text-sm md:text-base">

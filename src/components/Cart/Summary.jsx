@@ -31,7 +31,7 @@ const Summary = () => {
           {finalPrice > 200 ? (
             <span className="text-green-400">Free</span>
           ) : (
-            <span className="text-green-400">£20.00</span>
+            <span className="text-green-400">£8.99</span>
           )}
         </div>
         <div className="flex justify-between text-red-400">

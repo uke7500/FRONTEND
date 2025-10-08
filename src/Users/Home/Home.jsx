@@ -296,6 +296,12 @@ const Home = () => {
         {isFilterOpen && (
           <div className="xl:hidden fixed inset-0 bg-black bg-opacity-50 z-50">
             <div className="absolute top-0 left-0 right-0 bottom-0 overflow-y-auto">
+              <button
+                onClick={() => setIsFilterOpen(false)}
+                className="bg-emerald-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all duration-200 flex items-center gap-2 border-2 border-emerald-400 m-5"
+              >
+                Close
+              </button>
               <div className="p-4">{FilterSection}</div>
             </div>
           </div>

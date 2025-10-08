@@ -66,11 +66,11 @@ const ContactUs = () => {
                   <div>
                     <h4 className="font-bold mb-1">Address</h4>
                     <p className="text-gray-300">
-                      123 Security Street
+                      140 harmony hill 
                       <br />
-                      Tech District, City 12345
+                      E18 1qh
                       <br />
-                      United States
+                      United Kingdom
                     </p>
                   </div>
                 </div>

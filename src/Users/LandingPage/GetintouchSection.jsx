@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Phone, FileText, Mail, ChevronDown } from "lucide-react";
+import Map from "../../assets/Map.png";
 
 const GetintouchSection = () => {
   const [formData, setFormData] = useState({
@@ -61,11 +62,13 @@ const GetintouchSection = () => {
   return (
     <div className="bg-black p-8">
       <div className="max-w-7xl mx-auto mb-10">
-        <img
-          className="absolute w-60 h-118 left-[50%] mt-100 -translate-x-1/2 lg:left-270 lg:mt-7 md:left-[50%] md:-translate-x-1/2 md:mt-72 rounded-xl shadow-2xl hover:shadow-none transition-shadow duration-200 ease-in-out cursor-pointer z-50 md:w-90 md:h-auto"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToGJCbEKm6Dsj99yCQpINVH1UcHMlObtT9rQ&s"
-          alt=""
-        />
+        <a href="https://maps.app.goo.gl/V5gsQsD82MwfYHPV7" target="_blank">
+          <img
+            className="absolute w-60 h-120 left-[50%] mt-110 sm:mt-95 -translate-x-1/2 lg:left-270 lg:mt-1 lg:h-auto md:left-[50%] md:-translate-x-1/2 md:mt-72 rounded-xl shadow-2xl hover:shadow-none transition-shadow duration-200 ease-in-out cursor-pointer z-50 md:w-90 md:h-143"
+            src={Map}
+            alt=""
+          />
+        </a>
 
         <div className="h-160 grid lg:place-items-end md:place-items-center lg:grid-cols-2 gap-8 bg-white rounded-3xl shadow-lg">
           {/* Left Side - Contact Form */}
