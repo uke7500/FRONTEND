@@ -8,7 +8,6 @@ import { useNotification } from "../../components/ui/NotificationContext";
 
 const Cart = () => {
   const [promoCode, setPromoCode] = useState("");
-
   const dispatch = useDispatch();
   const { notify } = useNotification();
 
@@ -16,8 +15,11 @@ const Cart = () => {
   const { productData, totalPrice } = useSelector((store) => store.product);
   const { discount, promoCodeStore } = useSelector((store) => store.delivery);
 
-  let shipping = null;
-  totalPrice > 200 ? (shipping = 0) : (shipping = 8.99);
+  const MIN_PROMO_APPLY = 100; // promo threshold
+
+  // Shipping: free if cart subtotal > 200
+  const shipping = totalPrice > 200 ? 0 : 8.99;
+  // Final total (will reflect discount from Redux)
   const total = totalPrice - discount + shipping;
 
   // Example promo codes
@@ -25,11 +27,23 @@ const Cart = () => {
     SECURE10: 10,
   };
 
-  console.log(shipping);
-
+  // Apply promo handler (checks threshold)
   const handleApplyPromo = () => {
+    if (totalPrice <= MIN_PROMO_APPLY) {
+      notify(
+        `Cart total must be over £${MIN_PROMO_APPLY} to apply a promo.`,
+        "error"
+      );
+      return;
+    }
+
     const upperCode = promoCode.trim().toUpperCase();
     const discountValue = promoCodes[upperCode] || 0;
+
+    if (!discountValue) {
+      notify("Invalid promo code", "error");
+      return;
+    }
 
     dispatch(
       addCartData({
@@ -41,15 +55,30 @@ const Cart = () => {
       })
     );
     notify("Promo Code Applied", "success");
+    setPromoCode(""); // clear input (optional)
   };
 
   const handleClearPromo = () => {
     dispatch(clearPromoData());
     setPromoCode("");
+    notify("Promo cleared", "info");
   };
 
-  // ✅ FIX: Always update Redux totals when cart changes
+  // ✅ Always update Redux totals when cart changes.
+  // If cart drops below MIN_PROMO_APPLY, remove any stored promo/discount.
   useEffect(() => {
+    if (totalPrice <= MIN_PROMO_APPLY && (discount > 0 || promoCodeStore)) {
+      // Clear stored promo if the cart no longer meets threshold
+      dispatch(clearPromoData());
+      setPromoCode("");
+      notify(
+        `Promo removed — cart total must be over £${MIN_PROMO_APPLY} to keep a promo.`,
+        "info"
+      );
+      return; // early return since clearPromoData will update Redux values
+    }
+
+    // Normal total update
     dispatch(
       addCartData({
         cartSubTotal: totalPrice,
@@ -61,9 +90,9 @@ const Cart = () => {
     );
   }, [dispatch, totalPrice, discount, shipping, promoCodeStore]);
 
-  // Button clickability: require cart total > 100 AND either a stored promo or typed promo
+  // Button clickability: require cart total > MIN_PROMO_APPLY AND either a stored promo or typed promo
   const isClickable =
-    totalPrice > 100 && (Boolean(promoCodeStore) || promoCode.trim().length > 0);
+    totalPrice > MIN_PROMO_APPLY && (Boolean(promoCodeStore) || promoCode.trim().length > 0);
 
   return (
     <div className="min-h-screen bg-black my-20 text-white">
@@ -118,8 +147,8 @@ const Cart = () => {
                 title={
                   isClickable
                     ? undefined
-                    : totalPrice <= 100
-                    ? "Cart total must be over £100 to apply promo"
+                    : totalPrice <= MIN_PROMO_APPLY
+                    ? `Cart total must be over £${MIN_PROMO_APPLY} to apply promo`
                     : "Enter a promo code to apply"
                 }
                 className={`w-full py-2 rounded font-medium text-sm md:text-base ${
@@ -143,7 +172,7 @@ const Cart = () => {
               </div>
               <div className="flex justify-between text-sm md:text-base">
                 <span className="text-gray-400">Shipping:</span>
-                {total > 200 ? (
+                {shipping === 0 ? (
                   <span className="text-green-400">Free</span>
                 ) : (
                   <span className="text-green-400">£8.99</span>
