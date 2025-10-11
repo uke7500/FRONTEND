@@ -84,22 +84,22 @@ const Footer = () => {
                   Services
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors text-sm"
                 >
                   Pricing
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors text-sm"
                 >
                   Case studies
                 </a>
-              </li>
+              </li> */}
               <li className="cursor-pointer">
                 <a
                   onClick={goToReview}
@@ -108,14 +108,14 @@ const Footer = () => {
                   Reviews
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors text-sm"
                 >
                   Updates
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -143,30 +143,30 @@ const Footer = () => {
                   </a>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors text-sm"
                 >
                   Careers
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors text-sm"
                 >
                   Culture
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors text-sm"
                 >
                   Blog
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -174,14 +174,14 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-6">Support</h3>
             <ul className="space-y-4">
-              <li>
+              {/* <li>
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors text-sm"
                 >
                   Getting started
                 </a>
-              </li>
+              </li> */}
               <li>
                 <Link to="/contact">
                   <a
@@ -192,14 +192,14 @@ const Footer = () => {
                   </a>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors text-sm"
                 >
                   Server status
                 </a>
-              </li>
+              </li> */}
               <li>
                 <Link to="/contact">
                   <a className="text-gray-400 hover:text-white transition-colors text-sm">
@@ -207,7 +207,7 @@ const Footer = () => {
                   </a>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/contact">
                   <a
                     href="#"
@@ -216,7 +216,7 @@ const Footer = () => {
                     Chat support
                   </a>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -225,14 +225,14 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-6">Follow Us</h3>
             <ul className="space-y-5">
               {/* Facebook */}
-              <li className="flex gap-2 items-center cursor-pointer text-gray-400 hover:text-blue-500 transition-colors">
+              {/* <li className="flex gap-2 items-center cursor-pointer text-gray-400 hover:text-blue-500 transition-colors">
                 <span className="">
                   <Facebook size={20} />
                 </span>
                 <a href="#" className="text-sm">
                   Facebook
                 </a>
-              </li>
+              </li> */}
 
               {/* Twitter */}
               {/* <li className="flex gap-2 items-center cursor-pointer text-gray-400 hover:text-blue-400 transition-colors">
