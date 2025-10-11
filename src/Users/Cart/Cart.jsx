@@ -17,7 +17,7 @@ const Cart = () => {
   const { discount, promoCodeStore } = useSelector((store) => store.delivery);
 
   let shipping = null;
-  totalPrice > 200 ? shipping = 0 : shipping = 8.99;
+  totalPrice > 200 ? (shipping = 0) : (shipping = 8.99);
   const total = totalPrice - discount + shipping;
 
   // Example promo codes
@@ -61,6 +61,10 @@ const Cart = () => {
     );
   }, [dispatch, totalPrice, discount, shipping, promoCodeStore]);
 
+  // Button clickability: require cart total > 100 AND either a stored promo or typed promo
+  const isClickable =
+    totalPrice > 100 && (Boolean(promoCodeStore) || promoCode.trim().length > 0);
+
   return (
     <div className="min-h-screen bg-black my-20 text-white">
       {/* Header Navigation */}
@@ -98,9 +102,31 @@ const Cart = () => {
                 onChange={(e) => setPromoCode(e.target.value)}
                 className="w-full bg-gray-700 border border-gray-600 rounded px-3 md:px-4 py-2 text-white placeholder-gray-400 text-sm md:text-base"
               />
+
+              {/* Always render button, but disable it when isClickable is false */}
               <button
-                onClick={promoCodeStore ? handleClearPromo : handleApplyPromo}
-                className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded font-medium text-sm md:text-base cursor-pointer"
+                disabled={!isClickable}
+                onClick={
+                  isClickable
+                    ? promoCodeStore
+                      ? handleClearPromo
+                      : handleApplyPromo
+                    : undefined
+                }
+                aria-disabled={!isClickable}
+                tabIndex={isClickable ? 0 : -1}
+                title={
+                  isClickable
+                    ? undefined
+                    : totalPrice <= 100
+                    ? "Cart total must be over £100 to apply promo"
+                    : "Enter a promo code to apply"
+                }
+                className={`w-full py-2 rounded font-medium text-sm md:text-base ${
+                  isClickable
+                    ? "bg-green-600 hover:bg-green-700 text-white cursor-pointer"
+                    : "bg-gray-600 text-gray-300 cursor-not-allowed"
+                }`}
               >
                 {promoCodeStore ? "Clear" : "Apply"}
               </button>

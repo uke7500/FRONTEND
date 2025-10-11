@@ -66,7 +66,7 @@ const ContactUs = () => {
                   <div>
                     <h4 className="font-bold mb-1">Address</h4>
                     <p className="text-gray-300">
-                      140 harmony hill 
+                      140 hermon hill 
                       <br />
                       E18 1qh
                       <br />

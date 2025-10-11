@@ -269,7 +269,7 @@ const Home = () => {
   return (
     <div className="flex flex-col">
       {/* Header Section */}
-      <div className="flex justify-center flex-col lg:flex-row bg-gradient-to-r from-[#FFFFFF] to-[#4CAF50] min-h-[300px] md:min-h-[400px] lg:h-[500px] -mt-[74px] items-center gap-8 lg:gap-32 px-4 md:px-8 lg:px-16 py-8 lg:py-0 transition-all duration-500">
+      <div className="flex justify-center flex-col lg:flex-row bg-gradient-to-r from-[#FFFFFF] to-blue-100 min-h-[300px] md:min-h-[400px] lg:h-[500px] -mt-[74px] items-center gap-8 lg:gap-32 px-4 md:px-8 lg:px-16 py-8 lg:py-0 transition-all duration-500">
         {/* Text Section */}
         <h1 className="mt-20 lg:mt-0 text-3xl md:text-4xl lg:text-6xl font-bold text-black text-center lg:text-left">
           Explore Our Products
