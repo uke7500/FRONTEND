@@ -4,17 +4,9 @@ const GetintouchSection = () => {
   return (
     <div className="bg-black p-8 relative">
       <div className="max-w-7xl mx-auto mb-10">
-        <a href="https://maps.app.goo.gl/V5gsQsD82MwfYHPV7" target="_blank">
-          <img
-            className="absolute w-60 h-120 left-[50%] mt-110 sm:mt-95 -translate-x-1/2 lg:left-270 lg:mt-1 lg:h-auto md:left-[50%] md:-translate-x-1/2 md:mt-72 rounded-xl shadow-2xl hover:shadow-none transition-shadow duration-200 ease-in-out cursor-pointer z-50 md:w-90 md:h-143"
-            src={Map}
-            alt="Map"
-          />
-        </a>
-
-        <div className="h-160 grid lg:place-items-end md:place-items-center lg:grid-cols-2 gap-8 bg-white rounded-3xl shadow-lg">
-          {/* Left Side - Contact Form */}
-          <div className="p-8 lg:ml-20 lg:mb-42 lg:p-12 overflow-visible">
+        <div className="grid lg:grid-cols-2 gap-8 bg-white rounded-3xl shadow-lg overflow-hidden">
+          {/* Left Side - Contact Section */}
+          <div className="p-8 lg:p-12 lg:ml-20 flex flex-col justify-center">
             <div className="mb-8">
               <h1 className="text-4xl lg:text-5xl font-bold text-black mb-4">
                 Get in <span className="text-green-500">Touch</span>
@@ -26,29 +18,36 @@ const GetintouchSection = () => {
             </div>
 
             {/* Contact Information */}
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="flex items-center space-x-2">
-                {/* <Phone className="w-5 h-5 text-black" /> */}
-                <div>
-                  <p className="font-semibold text-black">PHONE</p>
-                  <p className="text-green-500 w-40">+44 0793452753</p>
-                </div>
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-1 gap-6">
+              <div>
+                <p className="font-semibold text-black">PHONE</p>
+                <p className="text-green-500">+44 0793452753</p>
               </div>
 
-              <div className="flex items-center space-x-3">
-                {/* <Mail className="w-5 h-5 text-black" /> */}
-                <div>
-                  <p className="font-semibold text-black">EMAIL</p>
-                  <p className="text-green-500">
-                    patelsecuresolution@gmail.com
-                  </p>
-                </div>
+              <div>
+                <p className="font-semibold text-black">EMAIL</p>
+                <p className="text-green-500 break-all">
+                  patelsecuresolution@gmail.com
+                </p>
               </div>
             </div>
           </div>
 
-          {/* Right Side - Map */}
-          <div className="relative bg-green-500 lg:w-90 md:w-full min-h-[530px] md:min-h-[600px] lg:min-h-full overflow-hidden md:rounded-3xl lg:rounded-none lg:rounded-r-3xl rounded-3xl"></div>
+          {/* Right Side - Map Section */}
+          <div className="relative bg-green-500 w-full min-h-[530px] md:min-h-[600px] lg:min-h-[530px] flex justify-center items-center lg:rounded-r-3xl">
+            <a
+              href="https://maps.app.goo.gl/V5gsQsD82MwfYHPV7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+            >
+              <img
+                src={Map}
+                alt="Map"
+                className="w-60 sm:w-72 md:w-80 lg:m-4 lg:w-[22rem] xl:w-[25rem] h-auto rounded-xl shadow-2xl hover:shadow-none transition-shadow duration-300 ease-in-out cursor-pointer object-cover"
+              />
+            </a>
+          </div>
         </div>
       </div>
     </div>
