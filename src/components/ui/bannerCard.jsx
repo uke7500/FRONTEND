@@ -17,8 +17,12 @@ const BannerCard = ({
         } items-start bg-white text-black rounded-xl shadow-lg overflow-hidden transition-all duration-300`}
       >
         {/* Image Section */}
-        <div className="w-full lg:w-1/2 max-h-[400px] aspect-video lg:aspect-auto">
-          <img src={image} alt={title} className="w-full h-full object-cover" />
+        <div className="w-full lg:w-1/2 lg:min-w-[50%] flex-shrink-0">
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-full min-h-[300px] lg:min-h-[400px] object-cover object-center"
+          />
         </div>
 
         {/* Text Content Section */}

@@ -1,72 +1,14 @@
-import { useState } from "react";
-import { Phone, FileText, Mail, ChevronDown } from "lucide-react";
 import Map from "../../assets/Map.png";
 
 const GetintouchSection = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    source: "",
-  });
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const sourceOptions = [
-    {
-      id: 1,
-      name: "Google Search",
-    },
-    {
-      id: 2,
-      name: "Social Media",
-    },
-    {
-      id: 3,
-      name: "Referral",
-    },
-    {
-      id: 4,
-      name: "Advertisement",
-    },
-    {
-      id: 5,
-      name: "Website",
-    },
-    {
-      id: 6,
-      name: "Other",
-    },
-  ];
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSourceSelect = (option) => {
-    setFormData((prev) => ({
-      ...prev,
-      source: option,
-    }));
-    setIsDropdownOpen(false);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission here
-  };
-
   return (
-    <div className="bg-black p-8">
+    <div className="bg-black p-8 relative">
       <div className="max-w-7xl mx-auto mb-10">
         <a href="https://maps.app.goo.gl/V5gsQsD82MwfYHPV7" target="_blank">
           <img
             className="absolute w-60 h-120 left-[50%] mt-110 sm:mt-95 -translate-x-1/2 lg:left-270 lg:mt-1 lg:h-auto md:left-[50%] md:-translate-x-1/2 md:mt-72 rounded-xl shadow-2xl hover:shadow-none transition-shadow duration-200 ease-in-out cursor-pointer z-50 md:w-90 md:h-143"
             src={Map}
-            alt=""
+            alt="Map"
           />
         </a>
 

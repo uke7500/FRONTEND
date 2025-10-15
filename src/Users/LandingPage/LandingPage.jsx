@@ -37,8 +37,8 @@ const LandingPage = () => {
           description={AboutUs.description}
           buttonText={AboutUs.buttonText}
           stats={[
-            { icon: "👥", value: "1234", label: "Happy Customers" },
-            { icon: "📦", value: "1234", label: "Products Sold" },
+            { icon: "👥", value: "1000+", label: "Happy Customers" },
+            { icon: "📦", value: "1000+", label: "Products Sold" },
           ]}
           reverse={false}
         />
