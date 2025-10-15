@@ -1,4 +1,4 @@
-import Map from "../../assets/Map.png";
+import Map from "../../assets/Map1.png";
 
 const GetintouchSection = () => {
   return (
@@ -36,7 +36,7 @@ const GetintouchSection = () => {
           {/* Right Side - Map Section */}
           <div className="relative bg-green-500 w-full min-h-[530px] md:min-h-[600px] lg:min-h-[530px] flex justify-center items-center lg:rounded-r-3xl">
             <a
-              href="https://maps.app.goo.gl/V5gsQsD82MwfYHPV7"
+              href="https://maps.app.goo.gl/Q5rqESACHL8t1Kg7A"
               target="_blank"
               rel="noopener noreferrer"
               className="block"
