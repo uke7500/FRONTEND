@@ -121,7 +121,7 @@ const ProductData = ({ productId }) => {
                 <NavLink to="/cart">
                   <button
                     onClick={handleBuyNow}
-                    className="flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 px-6 py-3 rounded font-medium transition-colors cursor-pointer"
+                    className="flex items-center justify-center w-full space-x-2 bg-green-600 hover:bg-green-700 px-6 py-3 rounded font-medium transition-colors cursor-pointer"
                   >
                     <CreditCard className="w-4 h-4" />
                     <span>Buy Now</span>
