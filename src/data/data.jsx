@@ -182,6 +182,7 @@ export const Country = [
   {
     name: "England",
     regions: [
+      "Not Selected",
       "North East",
       "North West",
       "Yorkshire and the Humber",
@@ -193,6 +194,7 @@ export const Country = [
       "South West",
     ],
     city: [
+      "Not Selected",
       "Bath",
       "Birmingham",
       "Bradford",
@@ -253,6 +255,7 @@ export const Country = [
   {
     name: "Scotland",
     regions: [
+      "Not Selected",
       "Aberdeen & Aberdeenshire",
       "Angus & Dundee",
       "Argyll and the Isles",
@@ -271,6 +274,7 @@ export const Country = [
       "Stirling and Forth Valley",
     ],
     city: [
+      "Not Selected",
       "Aberdeen City",
       "Aberdeenshire",
       "Angus",
@@ -308,6 +312,7 @@ export const Country = [
   {
     name: "Wales",
     regions: [
+      "Not Selected",
       "North Wales",
       "Mid and West Wales",
       "South West Wales",
@@ -315,6 +320,7 @@ export const Country = [
       "South Central Wales",
     ],
     city: [
+      "Not Selected",
       "Bangor",
       "Cardiff",
       "Newport",
@@ -327,6 +333,7 @@ export const Country = [
   {
     name: "Ireland",
     regions: [
+      "Not Selected",
       "Cork",
       "Dublin",
       "Galway",
@@ -351,6 +358,7 @@ export const Country = [
       "Armagh",
     ],
     city: [
+      "Not Selected",
       "Arklow",
       "Athy",
       "Bandon",
